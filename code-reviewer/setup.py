@@ -1,8 +1,8 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='condor_code_reviewer',
-    version='1.2.7',
+    name='cururo_code_reviewer',
+    version='1.0.0',
     packages=find_packages(),
     install_requires=[
         'openai',
@@ -10,7 +10,7 @@ setup(
     ],
     entry_points={
         'console_scripts': [
-            'condor=src.cli:main',
+            'cururo=src.cli:main',
         ],
     },
 )

@@ -1,20 +1,20 @@
-# Condor: Automated PR Review Tool
+# Cururo: Automated Commit Review Tool
 
 ## Description
 
-Condor is an automated Pull Request (PR) review tool designed to provide personalized feedback for Computer Science courses. It leverages the power of generative AI to offer insightful and constructive feedback on PRs, helping students improve their coding skills effectively.
+Based and forked on [Condor](https://github.com/CarloGauss33/Condor) (automated PR review tool) this tool leverages the power of generative AI to offer insightful and constructive feedback on commits, helping students improve their coding skills effectively.
 
 ## Features
 
-- **Personalized Feedback**: Condor provides personalized and timely feedback on your code, directly in your PRs.
-- **AI-Powered Review Process**: Condor uses generative AI to offer constructive criticism and suggestions for improvement.
-- **Adaptive Learning Experience**: Condor adapts to individual needs, helping students grow as programmers.
-- **CI/CD Integration (Coming Soon)**: Condor will soon support integration with Continuous Integration/Continuous Deployment (CI/CD) systems, allowing automated reviews to be triggered by events such as PR creation or code push.
+- **Personalized Feedback**: Cururo provides personalized and timely feedback on your code, directly in your PRs.
+- **AI-Powered Review Process**: Cururo uses generative AI to offer constructive criticism and suggestions for improvement.
+- **Adaptive Learning Experience**: Cururo adapts to individual needs, helping students grow as programmers.
+- **CI/CD Integration (Coming Soon)**: Cururo will soon support integration with Continuous Integration/Continuous Deployment (CI/CD) systems, allowing automated reviews to be triggered by events such as PR creation or code push.
 - **Docker Support (Coming Soon)**: We are working on a Docker runner for Condor, which will make it even easier to deploy and run in any environment.
 
-## Running Condor Locally
+## Running Cururo Locally
 
-To run Condor locally, you need to install the required Python packages and set up the necessary environment variables. Here are the steps:
+To run Cururo locally, you need to install the required Python packages and set up the necessary environment variables. Here are the steps:
 
 1. Install the module
 `pip install -e code-reviewer`
