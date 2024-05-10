@@ -1,6 +1,7 @@
 import argparse
 import os
 from .reviewer import Reviewer
+from .util.handler import ResponseHandler
 
 DEFAULT_OPENAI_KEY = os.getenv('OPENAI_KEY')
 DEFAULT_ASSISTANT_ID = os.getenv('ASSISTANT_ID')
@@ -39,7 +40,15 @@ def main():
     args = parser.parse_args()
     _check_args(args)
 
-    Reviewer(args.openai_key, args.assistant_id, args.gh_api_key, args.pull_request_url)
+    publisher = Publisher(gh_api_key=args.gh_api_key, _url=args.pull_request_url)
+    reviewer = Reviewer(openai_api_key=args.openai_key, assistant_id=args.assistant_id)
+    reviewer.append_commit("Update README", "Diff of README update")
+    # Define additional actions if needed
+    def custom_action(response):
+        print(f"Custom action for response: {response}")
+
+    handler = ResponseHandler(publisher=publisher, additional_actions=[custom_action])
+    reviewer.execute(handler.handle_response)
 
 if __name__ == '__main__':
     main()
