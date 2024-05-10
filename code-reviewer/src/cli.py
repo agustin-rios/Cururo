@@ -3,7 +3,6 @@ import os
 from .reviewer import Reviewer
 from .publisher import Publisher
 from .util.handler import ResponseHandler
-import json
 
 # DEFAULT_OPENAI_KEY = os.getenv('OPENAI_KEY')
 # DEFAULT_ASSISTANT_ID = os.getenv('ASSISTANT_ID')
@@ -47,8 +46,7 @@ def main():
     reviewer.append_commit("Update README", "Diff of README update")
     # Define additional actions if needed
     def custom_action(response):
-        y = json.loads(response)
-        print(f"Custom action for response: {y['message']}")
+        pass #print(f"Custom action for response: {response}")
 
 
     handler = ResponseHandler(publisher=publisher, additional_actions=[custom_action])
