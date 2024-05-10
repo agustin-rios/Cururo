@@ -29,6 +29,6 @@ class ResponseHandler:
             action(response)
 
         if response:
-            print(f"Response processed: {response}")
+            print("Response processed")
         else:
             print("No response to process.")

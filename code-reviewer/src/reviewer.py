@@ -7,7 +7,7 @@ class Reviewer:
 
     def add_commit(self, user_message, commit_diff):
         message = f"Commit Message: {user_message}\n\nCommit Diff: {commit_diff}"
-        response = self.assistant.add_and_retrieve_message(messages, "user")
+        response = self.assistant.add_and_retrieve_message(message, "user")
         if response and response != 'APIError: No response':
             return response
         return None
@@ -17,13 +17,12 @@ class Reviewer:
 
     def execute(self, callback):
         for step in self.steps:
-            response = step()
-            callback(response)
+            callback(step())
 
     def __append_step(self, func, *args, **kwargs):
         def wrapper(*args2, **kwargs2):
             print(f"Running step: {func.__name__}")
-            func(*args, **kwargs)
+            return func(*args, **kwargs)
 
         self.steps.append(wrapper)
 

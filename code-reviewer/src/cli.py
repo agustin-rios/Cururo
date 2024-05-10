@@ -1,10 +1,12 @@
 import argparse
 import os
 from .reviewer import Reviewer
+from .publisher import Publisher
 from .util.handler import ResponseHandler
+import json
 
-DEFAULT_OPENAI_KEY = os.getenv('OPENAI_KEY')
-DEFAULT_ASSISTANT_ID = os.getenv('ASSISTANT_ID')
+# DEFAULT_OPENAI_KEY = os.getenv('OPENAI_KEY')
+# DEFAULT_ASSISTANT_ID = os.getenv('ASSISTANT_ID')
 DEFAULT_GH_API_KEY = os.getenv('GH_API_KEY')
 DEFAULT_PR_URL = os.getenv('PR_URL')
 
@@ -38,14 +40,16 @@ def main():
     parser.add_argument('--pull-request-url', type=str, default=DEFAULT_PR_URL, help='GitHub pull request URL.')
     
     args = parser.parse_args()
-    _check_args(args)
+    # _check_args(args)
 
     publisher = Publisher(gh_api_key=args.gh_api_key, _url=args.pull_request_url)
     reviewer = Reviewer(openai_api_key=args.openai_key, assistant_id=args.assistant_id)
     reviewer.append_commit("Update README", "Diff of README update")
     # Define additional actions if needed
     def custom_action(response):
-        print(f"Custom action for response: {response}")
+        y = json.loads(response)
+        print(f"Custom action for response: {y['message']}")
+
 
     handler = ResponseHandler(publisher=publisher, additional_actions=[custom_action])
     reviewer.execute(handler.handle_response)
