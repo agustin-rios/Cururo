@@ -5,15 +5,14 @@ class Reviewer:
         self.assistant = OpenAIAssistant(openai_api_key, assistant_id)
         self.steps = list()
 
-    def add_commit(self, user_message, commit_diff):
-        message = f"Commit Message: {user_message}\n\nCommit Diff: {commit_diff}"
-        response = self.assistant.add_and_retrieve_message(message, "user")
+    def add_item(self, item):
+        response = self.assistant.add_and_retrieve_message(item, "user")
         if response and response != 'APIError: No response':
             return response
         return None
 
-    def append_commit(self, user_message="", commit_diff=""):
-        self.__append_step(self.add_commit, user_message, commit_diff)
+    def append_item(self, item=""):
+        self.__append_step(self.add_item, item)
 
     def execute(self, callback):
         for step in self.steps:
