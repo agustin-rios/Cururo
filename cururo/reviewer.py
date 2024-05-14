@@ -1,8 +1,8 @@
 from .lib.openai_assistant import OpenAIAssistant
 
 class Reviewer:
-    def __init__(self, openai_api_key, assistant_id):
-        self.assistant = OpenAIAssistant(openai_api_key, assistant_id)
+    def __init__(self, openai_api_key, assistant_id, mode='production'):
+        self.assistant = OpenAIAssistant(openai_api_key, assistant_id, mode=mode)
         self.steps = list()
 
     def add_item(self, item):

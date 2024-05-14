@@ -56,17 +56,13 @@ class OpenAIAssistant(AIEnv):
         return run
     
     @EnvModes.non_production_handler('Hello, world!')
-    @handle_errors(default_value='Failed to add and retrieve message')
+    @handle_errors(default_value='APIError: no response')
     def add_and_retrieve_message(self, message, role):
         message = self.add_message(message, role)
         run = self.create_thread_run()
         status = self.wait_on_run(run)
-        
         msg = self.get_last_message()
-        try:
-            return msg.content[0].text.value
-        except AttributeError:
-            return 'APIError: No response'
+        return msg.content[0].text.value
     
 if __name__ == '__main__':
     assistant = OpenAIAssistant('a', 'b', mode='development')
