@@ -3,6 +3,8 @@ from setuptools import setup, find_packages
 setup(
     name='cururo',
     version='1.0.0',
+    author='Agustin Rios',
+    author_email='arios6@uc.cl',
     description='Review an item using OpenAI.',
     long_description=open('README.md').read() + '\n\n' + open('CHANGELOG.md').read(),
     long_description_content_type='text/markdown',
