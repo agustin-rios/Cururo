@@ -20,7 +20,7 @@ class Reviewer:
 
     def __append_step(self, func, *args, **kwargs):
         def wrapper(*args2, **kwargs2):
-            print(f"Running step: {func.__name__}")
+            # print(f"Running step: {func.__name__}")
             return func(*args, **kwargs)
 
         self.steps.append(wrapper)

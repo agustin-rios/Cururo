@@ -1,18 +1,17 @@
 import argparse
 import os
 from .reviewer import Reviewer
-from .util.publisher import Publisher
+from .lib.web_publisher import WebPublisher
 from .util.handler import ResponseHandler
 from .lib.env_modes import EnvModes
 
 def custom_action(response):
-    pass # Custom action to perform on response
+    print(f"CURURO_RESPONSE([C:START]{response}[C:END])")
 
 DEFAULT_OPENAI_KEY = os.getenv('OPENAI_KEY')
 DEFAULT_ASSISTANT_ID = os.getenv('ASSISTANT_ID')
 DEFAULT_MODE = 'production'
-DEFAULT_ACTION = custom_action
-DEFAULT_PUBLISHER = Publisher()
+DEFAULT_PUBLISHER = None
 
 
 def main():
@@ -21,25 +20,30 @@ def main():
     parser.add_argument('--openai-key', type=str, default=DEFAULT_OPENAI_KEY, help='OpenAI API key.', required=DEFAULT_OPENAI_KEY is None)
     parser.add_argument('--assistant-id', type=str, default=DEFAULT_ASSISTANT_ID, help='OpenAI assistant ID.', required=DEFAULT_ASSISTANT_ID is None)
     parser.add_argument('--mode', type=str, default=DEFAULT_MODE, help='Mode to run the review in.', choices=EnvModes.allowed_modes)
-    parser.add_argument('--action', type=str, default=DEFAULT_ACTION, help='Custom action to perform on response.')
-    parser.add_argument('--publisher', type=str, default=DEFAULT_PUBLISHER, help='Publisher to publish results.')
-    # print version
-    parser.add_argument('--version', action='version', version='%(prog)s 1.1.0')
+    parser.add_argument('--web-url', type=str, help='URL to post the response to.', default=None)
+    parser.add_argument('--web-secret', type=str, help='Secret to use when posting the response to the URL.', default=None)
+    parser.add_argument('--web-processor', type=str, help='Processor to use when posting the response to the URL.', default=None)
+    parser.add_argument('--version', action='version', version='%(prog)s 1.1.1')
     
     args = parser.parse_args()
 
-    if isinstance(args.action, str):
-        # Here you would dynamically import or determine the action function
-        args.action = eval(args.action)  # Be careful with eval and consider security implications
+    if args.web_url and not args.web_secret:
+        parser.error('--web-secret is required when using --web-url')
 
-    if isinstance(args.publisher, str):
-        # Similar to action, instantiate your publisher or similarly handle it
-        args.publisher = eval(args.publisher)  # Ensure security if using eval
-        # print pubihser methods
-        print(dir(args.publisher))
+    if args.web_processor:
+        try:
+            processor = eval(args.web_processor)
+        except:
+            parser.error('--web-processor must be a valid callable')
+        args.web_processor = processor
 
+    # check url
+    if args.web_url:
+        publisher = WebPublisher(web_url=args.web_url, web_secret=args.web_secret, processor=args.web_processor)
+    else:
+        publisher = DEFAULT_PUBLISHER
 
-    handler = ResponseHandler(publisher=args.publisher, additional_actions=[args.action])
+    handler = ResponseHandler(publisher=publisher, additional_actions=[args.action])
     reviewer = Reviewer(openai_api_key=args.openai_key, assistant_id=args.assistant_id, mode=args.mode)
     reviewer.append_item(args.item)
     reviewer.execute(handler.handle_response)
