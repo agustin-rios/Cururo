@@ -24,4 +24,4 @@ class Publisher:
         try:
             return json.loads(response_string)
         except json.JSONDecodeError:
-            return response_string
+            return {'message': response_string}
