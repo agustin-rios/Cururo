@@ -6,7 +6,7 @@ from .util.handler import ResponseHandler
 from .lib.env_modes import EnvModes
 
 def custom_action(response):
-    pass # Custom action to perform on response
+    print(f"CURURO_RESPONSE([C:START]{response}[C:END])")
 
 DEFAULT_OPENAI_KEY = os.getenv('OPENAI_KEY')
 DEFAULT_ASSISTANT_ID = os.getenv('ASSISTANT_ID')
