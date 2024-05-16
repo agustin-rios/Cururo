@@ -27,8 +27,3 @@ class ResponseHandler:
 
         for action in self.additional_actions:
             action(response)
-
-        if response:
-            print("Response processed")
-        else:
-            print("No response to process.")

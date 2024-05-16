@@ -15,7 +15,7 @@ class ResponseProcessor:
         try:
             return json.loads(response_string)
         except json.JSONDecodeError:
-            raise ValueError("Invalid JSON provided")
+            return response_string
 
     
     def create_full_report(self):
