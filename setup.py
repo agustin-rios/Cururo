@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='cururo',
-    version='1.1.2',
+    version='1.1.3',
     author='Agustin Rios',
     author_email='arios6@uc.cl',
     description='Review an item using OpenAI.',
