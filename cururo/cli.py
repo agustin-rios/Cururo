@@ -23,7 +23,7 @@ def main():
     parser.add_argument('--web-url', type=str, help='URL to post the response to.', default=None)
     parser.add_argument('--web-secret', type=str, help='Secret to use when posting the response to the URL.', default=None)
     parser.add_argument('--web-processor', type=str, help='Processor to use when posting the response to the URL.', default=None)
-    parser.add_argument('--version', action='version', version='%(prog)s 1.1.1')
+    parser.add_argument('--version', action='version', version='%(prog)s 1.1.2')
     
     args = parser.parse_args()
 
@@ -43,7 +43,7 @@ def main():
     else:
         publisher = DEFAULT_PUBLISHER
 
-    handler = ResponseHandler(publisher=publisher, additional_actions=[args.action])
+    handler = ResponseHandler(publisher=publisher, additional_actions=[custom_action])
     reviewer = Reviewer(openai_api_key=args.openai_key, assistant_id=args.assistant_id, mode=args.mode)
     reviewer.append_item(args.item)
     reviewer.execute(handler.handle_response)
